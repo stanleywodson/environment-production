@@ -11,6 +11,9 @@ services:
     ports:
       - "80:80" #http
       - "443:443" #https
+    networks:
+      - laravel  
+
   redis:
     image: "redis:alpine"
     ports:
@@ -33,3 +36,28 @@ services:
           memory: 100M
       restart_policy:
         condition: on-failure
+    networks:
+      - laravel  
+
+  kibana:
+      image: kibana:7.17.15
+      ports:
+        - "5601:5601"
+      environment:
+        ELASTICSEARCH_HOSTS: "http://search:9200"
+      networks:
+        - laravel
+  
+  search:
+      container_name: elasticsearch_search
+      image: elasticsearch:7.17.15
+      ports:
+        - 9200:9200
+      environment:
+        - discovery.type=single-node
+        # - ES_JAVA_OPTS=-Xms4g -Xmx4g
+      networks:
+        - laravel
+networks:
+    laravel:
+        driver: bridge            
