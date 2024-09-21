@@ -37,16 +37,25 @@ COPY ./docker/supervisord/conf /etc/supervisord.d/
 ### Supervisor permite monitorar e controlar vários processos (LINUX)
 ### Bastante utilizado para manter processos em Daemon, ou seja, executando em segundo plano
 
-COPY ./docker/php/extra-php.ini "$PHP_INI_DIR/99_extra.ini"
+# COPY ./docker/php/extra-php.ini "$PHP_INI_DIR/99_extra.ini"
+COPY docker/php/custom.ini /usr/local/etc/php/conf.d/custom.ini
 COPY ./docker/php/extra-php-fpm.conf /etc/php8/php-fpm.d/www.conf
 
 WORKDIR $APP_DIR
 RUN cd $APP_DIR
 RUN chown www-data:www-data $APP_DIR
 
-COPY --chown=www-data:www-data ./app .
+COPY --chown=www-data:www-data ./app_octane .
 RUN rm -rf vendor
 RUN composer install --no-interaction
+
+### HORIZON
+RUN composer require laravel/horizon
+RUN php artisan horizon:install	
+
+# Otimizar a aplicação
+RUN php artisan clear-compiled \
+    && php artisan optimize
 
 RUN apt-get install nginx -y
 RUN rm -rf /etc/nginx/sites-enabled/* && rm -rf /etc/nginx/sites-available/*

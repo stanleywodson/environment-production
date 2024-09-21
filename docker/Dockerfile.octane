@@ -9,15 +9,19 @@ ARG APP_DIR=/var/www/app
 ARG REDIS_LIB_VERSION=5.3.7
 
 # Atualizar os pacotes e instalar dependências
-RUN apt-get update -y && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     apt-utils \
     supervisor \
-    zlib1g-dev \
-    libzip-dev \
-    unzip \
+    git \
+    curl \
     libpng-dev \
-    libpq-dev \
+    libonig-dev \
     libxml2-dev \
+    zip \
+    unzip \
+    libzip-dev \
+    zlib1g-dev \
+    libpq-dev \
     nginx \
     libbrotli-dev \
     pkg-config \
@@ -61,6 +65,9 @@ RUN composer install --no-interaction
 # Instalar e configurar o Octane
 RUN composer require laravel/octane \
     && php artisan octane:install --server=swoole
+
+# # Copiar o arquivo de configuração octane.php personalizado
+# COPY ./docker/octane/octane.php /var/www/config/octane.php
 
 ### HORIZON
 RUN composer require laravel/horizon

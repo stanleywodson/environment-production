@@ -1,23 +1,25 @@
 version: "3.9"
 services:
   web-octane:
-    image: madzone/ironfence-app:v1.2
+    image: madzone/ironfence-app:v1.2.1
     container_name: web-octane
     build:
       context: .
-      dockerfile: ./docker/Dockerfile.octane
+      dockerfile: ./docker/Dockerfile
       args:
-        PHP_VERSION: '8.3-zts-bullseye'
+        PHP_VERSION: '8.3-fpm-bullseye'
     ports:
       - "80:80" #http
       - "443:443" #https
+    # volumes:
+    #   - ./docker/octane/octane.php:/var/www/app/config/octane.php
     networks:
       - laravel  
 
   redis:
     image: "redis:alpine"
-    ports:
-      - "6379:6379"
+    # ports:
+    #   - "6379:6379"
     healthcheck:
       test:
         - CMD
@@ -57,7 +59,7 @@ services:
         - discovery.type=single-node
         # - ES_JAVA_OPTS=-Xms4g -Xmx4g
       networks:
-        - laravel
+        - laravel       
 networks:
     laravel:
         driver: bridge            
