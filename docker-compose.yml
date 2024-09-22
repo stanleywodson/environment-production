@@ -8,18 +8,18 @@ services:
       dockerfile: ./docker/Dockerfile
       args:
         PHP_VERSION: '8.3-fpm-bullseye'
+    depends_on:
+      - redis  
     ports:
       - "80:80" #http
       - "443:443" #https
-    # volumes:
-    #   - ./docker/octane/octane.php:/var/www/app/config/octane.php
     networks:
       - laravel  
 
   redis:
     image: "redis:alpine"
-    # ports:
-    #   - "6379:6379"
+    ports:
+      - "6379:6379"
     healthcheck:
       test:
         - CMD
