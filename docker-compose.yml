@@ -2,7 +2,7 @@ version: "3.9"
 services:
   web-octane:
     image: madzone/ironfence-app:v1.2.1
-    container_name: web-octane
+    container_name: ironfence-app
     build:
       context: .
       dockerfile: ./docker/Dockerfile
