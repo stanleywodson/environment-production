@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   web-octane:
-    image: madzone/ironfence-app:v1.2.1
+    image: madzone/ironfence-app:v1.3.1
     container_name: ironfence-app
     build:
       context: .
