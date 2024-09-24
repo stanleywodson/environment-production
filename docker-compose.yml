@@ -32,10 +32,10 @@ services:
       resources:
         limits:
           cpus: "2.0"  # Limite de CPU aumentado
-          memory: 4G   # Limite de memória aumentado
+          memory: 10G   # Limite de memória aumentado
         reservations:
           cpus: "1.0"  # Reserva de CPU aumentada
-          memory: 1G   # Reserva de memória aumentada
+          memory: 2G   # Reserva de memória aumentada
       restart_policy:
         condition: on-failure
     networks:
