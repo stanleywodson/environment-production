@@ -31,35 +31,35 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: "0.5"
-          memory: 600M
+          cpus: "2.0"  # Limite de CPU aumentado
+          memory: 4G   # Limite de memória aumentado
         reservations:
-          cpus: "0.1"
-          memory: 100M
+          cpus: "1.0"  # Reserva de CPU aumentada
+          memory: 1G   # Reserva de memória aumentada
       restart_policy:
         condition: on-failure
     networks:
-      - laravel  
+      - laravel
 
-  kibana:
-      image: kibana:7.17.15
-      ports:
-        - "5601:5601"
-      environment:
-        ELASTICSEARCH_HOSTS: "http://search:9200"
-      networks:
-        - laravel
+  # kibana:
+  #     image: kibana:7.17.15
+  #     ports:
+  #       - "5601:5601"
+  #     environment:
+  #       ELASTICSEARCH_HOSTS: "http://search:9200"
+  #     networks:
+  #       - laravel
   
-  search:
-      container_name: elasticsearch_search
-      image: elasticsearch:7.17.15
-      ports:
-        - 9200:9200
-      environment:
-        - discovery.type=single-node
-        # - ES_JAVA_OPTS=-Xms4g -Xmx4g
-      networks:
-        - laravel       
+  # search:
+  #     container_name: elasticsearch_search
+  #     image: elasticsearch:7.17.15
+  #     ports:
+  #       - 9200:9200
+  #     environment:
+  #       - discovery.type=single-node
+  #       # - ES_JAVA_OPTS=-Xms4g -Xmx4g
+  #     networks:
+  #       - laravel       
 networks:
     laravel:
         driver: bridge            
