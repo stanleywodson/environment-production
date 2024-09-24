@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   web-octane:
     image: madzone/ironfence-app:v1.3.1
