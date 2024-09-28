@@ -1,6 +1,6 @@
 services:
   web-octane:
-    image: madzone/ironfence-app:v1.4.0
+    image: madzone/ironfence-app:hot
     container_name: ironfence-app
     build:
       context: .
@@ -30,11 +30,11 @@ services:
       replicas: 1
       resources:
         limits:
-          cpus: "2.0"  # Limite de CPU aumentado
-          memory: 10G   # Limite de memória aumentado
+          cpus: "4.0"  # Limite de CPU aumentado
+          memory: 20G   # Limite de memória aumentado
         reservations:
-          cpus: "1.0"  # Reserva de CPU aumentada
-          memory: 2G   # Reserva de memória aumentada
+          cpus: "2.0"  # Reserva de CPU aumentada
+          memory: 3G   # Reserva de memória aumentada
       restart_policy:
         condition: on-failure
     networks:
