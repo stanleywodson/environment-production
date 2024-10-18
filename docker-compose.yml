@@ -1,6 +1,6 @@
 services:
   web-octane:
-    image: madzone/ironfence-app:hot-v1
+    image: madzone/ironfence-app:hot-v2
     container_name: ironfence-app
     build:
       context: .
@@ -10,6 +10,7 @@ services:
     depends_on:
       - redis  
     ports:
+      - "8080:8080"
       - "80:80" #http
       - "443:443" #https
     networks:
