@@ -1,6 +1,6 @@
 services:
   web-octane:
-    image: madzone/ironfence-app:hot-v2.2-alfa
+    image: madzone/ironfence-app:hot-v2.3-alfa
     container_name: ironfence-app
     build:
       context: .
@@ -14,52 +14,7 @@ services:
       - "80:80" #http
       - "443:443" #https
     networks:
-      - laravel  
-
-  # redis:
-  #   image: "redis:alpine"
-  #   ports:
-  #     - "6379:6379"
-  #   healthcheck:
-  #     test:
-  #       - CMD
-  #       - redis-cli
-  #       - ping
-  #     retries: 3
-  #     timeout: 5s
-  #   deploy:
-  #     replicas: 1
-  #     resources:
-  #       limits:
-  #         cpus: "4.0"  # Limite de CPU aumentado
-  #         memory: 20G   # Limite de memória aumentado
-  #       reservations:
-  #         cpus: "2.0"  # Reserva de CPU aumentada
-  #         memory: 3G   # Reserva de memória aumentada
-  #     restart_policy:
-  #       condition: on-failure
-  #   networks:
-  #     - laravel
-
-  # kibana:
-  #     image: kibana:7.17.15
-  #     ports:
-  #       - "5601:5601"
-  #     environment:
-  #       ELASTICSEARCH_HOSTS: "http://search:9200"
-  #     networks:
-  #       - laravel
-  
-  # search:
-  #     container_name: elasticsearch_search
-  #     image: elasticsearch:7.17.15
-  #     ports:
-  #       - 9200:9200
-  #     environment:
-  #       - discovery.type=single-node
-  #       # - ES_JAVA_OPTS=-Xms4g -Xmx4g
-  #     networks:
-  #       - laravel       
+      - laravel      
 networks:
     laravel:
         driver: bridge            
