@@ -1,6 +1,6 @@
 services:
   web-octane:
-    image: madzone/ironfence-app:robust-1.3.2
+    image: madzone/ironfence-app:robust-1.4.0
     container_name: ironfence-app
     build:
       context: .
