@@ -1,4 +1,4 @@
-ARG PHP_VERSION
+ARG PHP_VERSION='8.3-fpm-bullseye'
 FROM php:${PHP_VERSION}
 
 ## Diretório da aplicação
