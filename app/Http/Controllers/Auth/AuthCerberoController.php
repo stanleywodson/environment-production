@@ -62,7 +62,6 @@ class AuthCerberoController extends Controller
 					'email' => $decode->profile->email,
 					'password' => bcrypt($credentials['password']),
 					'uuid' => $decode->profile->uuid,
-
 				]);
 			}
 
