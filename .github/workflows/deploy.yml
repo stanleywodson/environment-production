@@ -37,11 +37,10 @@ jobs:
       - name: Deploy to Production
         uses: appleboy/ssh-action@v0.1.5
         with:
-#          host: ${{ secrets.SERVER_IP }}
-#          username: ${{ secrets.SERVER_USER }}
-#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SERVER_IP }} "
             cd /ironfence
             git pull origin main
             docker pull ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
