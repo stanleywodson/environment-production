@@ -74,8 +74,7 @@ COPY ./docker/nginx/error.html /var/www/html/error.html
 
 # Configuração da aplicação
 WORKDIR $APP_DIR
-COPY --chown=www-data:www-data ../app_octane/composer.json ../app_octane/composer.lock ./app_octane/
-
+COPY --chown=www-data:www-data ../app_octane/composer.json ../app_octane/composer.lock ./
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
 # Copia os arquivos do projeto
