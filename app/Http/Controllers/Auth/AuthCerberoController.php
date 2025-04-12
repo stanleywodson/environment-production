@@ -109,6 +109,7 @@ class AuthCerberoController extends Controller
 		$request->validate(['token' => 'required']);
 
 		try {
+
 			// Obtenha o JWK e verifique a resposta
 			$response = Http::withoutVerifying()->get(config('cerbero.jwk_url'));
 			if (!$response->successful()) {
