@@ -17,7 +17,7 @@ jobs:
       # Build da imagem Docker
       - name: Build Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:latest .
+          docker docker/Dockerfile build -t ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:latest .
 
       # Login no Docker Hub
       - name: Login to Docker Hub
