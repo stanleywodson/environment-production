@@ -26,7 +26,7 @@ jobs:
       # Push da imagem para o Docker Hub
       - name: Push Docker Image
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
 
   deploy:
     needs: build-and-push
@@ -43,6 +43,6 @@ jobs:
           script: |
             cd /ironfence
             git pull origin main
-            docker pull ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
             docker-compose down
             docker-compose up -d
