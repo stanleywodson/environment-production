@@ -28,6 +28,21 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
 
+      # Rollback no Git e Docker Hub se houver falha durante o Build ou Push
+      - name: Rollback Git and Docker Hub if Build or Push fails
+        if: failure()
+        run: |
+          echo "Falha no Build ou Push. Realizando rollback..."
+          
+          # Rollback no Git
+          git reset --hard HEAD~1            # Volta o repositório para o estado anterior
+          git clean -fd                      # Remove arquivos não rastreados
+          
+          # Rollback no Docker Hub
+          docker pull ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:previous-version-tag
+          docker tag ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:previous-version-tag ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
+          docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
+
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
@@ -44,5 +59,26 @@ jobs:
             cd /ironfence
             git pull origin main
             docker pull ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
+            docker-compose down
+            docker-compose up -d
+
+      # Caso falhe no Deploy, realizar rollback no Git e Docker Hub
+      - name: Rollback Git and Docker Hub in case of Deploy failure
+        if: failure()
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            # Rollback no Git
+            cd /ironfence
+            git reset --hard HEAD~1
+            git clean -fd
+
+            # Rollback no Docker Hub
+            docker pull ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:previous-version-tag
+            docker tag ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:previous-version-tag ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
+            docker push ${{ secrets.DOCKER_USERNAME }}/my-laravel-app:$GITHUB_SHA
             docker-compose down
             docker-compose up -d
