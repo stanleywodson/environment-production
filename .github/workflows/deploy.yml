@@ -50,6 +50,7 @@ jobs:
     steps:
       # Conecta ao servidor de produção via SSH e atualiza o container
       - name: Deploy to Production
+        id: deploy
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -64,7 +65,7 @@ jobs:
 
       # Caso falhe no Deploy, realizar rollback no Git e Docker Hub
       - name: Rollback Git and Docker Hub in case of Deploy failure
-        if: failure()
+        if: failure() && steps.deploy.outcome == 'failure'
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SERVER_IP }}
