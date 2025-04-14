@@ -21,6 +21,7 @@ services:
     networks:
       - laravel
 
+
 #  meilisearch-harpia:
 #    image: getmeili/meilisearch:latest
 #    restart: unless-stopped
