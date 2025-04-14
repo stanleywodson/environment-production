@@ -51,11 +51,14 @@ jobs:
       # Conecta ao servidor de produção via SSH e atualiza o container
       - name: Deploy to Production
         id: deploy
-        uses: appleboy/ssh-action@v0.1.5
+        uses: easingthemes/ssh-deploy@main
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SERVER_IP }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          TARGET: /ironfence
+          SOURCE: .
+          EXCLUDES: .git .github
           script: |
             cd /ironfence
             git pull origin main
@@ -69,7 +72,7 @@ jobs:
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
+          username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             # Rollback no Git
