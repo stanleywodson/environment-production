@@ -56,8 +56,6 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.SERVER_IP }}
           REMOTE_USER: ${{ secrets.SSH_USER }}
-          TARGET: /ironfence
-          SOURCE: .
           script: |
             cd /ironfence
             git pull origin main
