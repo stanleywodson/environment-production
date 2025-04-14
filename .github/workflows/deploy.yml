@@ -58,7 +58,6 @@ jobs:
           REMOTE_USER: ${{ secrets.SSH_USER }}
           TARGET: /ironfence
           SOURCE: .
-          EXCLUDES: .git .github
           script: |
             cd /ironfence
             git pull origin main
