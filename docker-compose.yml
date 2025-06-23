@@ -2,6 +2,7 @@ services:
   web-octane:
     image: madzone/ironfence-app:robust-1.11.0
     container_name: ironfence-app
+    restart: always
     build:
       context: .
       dockerfile: ./docker/Dockerfile
