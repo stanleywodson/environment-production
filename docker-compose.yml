@@ -1,6 +1,6 @@
 services:
   web-octane:
-    image: madzone/ironfence-app:robust-1.11.1
+    image: madzone/ironfence-app:robust-1.11.2
     container_name: ironfence-app
     restart: always
     build:
@@ -17,10 +17,10 @@ services:
     networks:
       - laravel
 
-  redis:
-    image: redis:latest
-    networks:
-      - laravel
+  # redis:
+  #   image: redis:latest
+  #   networks:
+  #     - laravel
 
 #  meilisearch-harpia:
 #    image: getmeili/meilisearch:latest

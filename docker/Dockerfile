@@ -24,8 +24,13 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-install mysqli pdo pdo_mysql pdo_pgsql pgsql session xml
 
 # habilita instalação do Redis
-RUN pecl install redis-${REDIS_LIB_VERSION} \
-    && docker-php-ext-enable redis 
+RUN curl -sSL "https://pecl.php.net/get/redis-6.0.2.tgz" -o redis.tgz \
+    && mkdir -p /tmp/redis \
+    && tar -xf redis.tgz -C /tmp/redis --strip-components=1 \
+    && rm redis.tgz \
+    && docker-php-ext-configure /tmp/redis \
+    && docker-php-ext-install /tmp/redis \
+    && rm -rf /tmp/redis
 
 RUN docker-php-ext-install zip iconv simplexml pcntl gd fileinfo
 
